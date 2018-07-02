@@ -11,6 +11,21 @@ exports.info = async (req, res) => {
 
 //注册
 exports.register = async (req, res) => {
-    const {username, password, type} = req.body
-    res.json({success: true, backData: req.body, msg: '注册成功！'})
+    try {
+        const {username, password, type} = req.body
+        let user = await User.findOne({username})
+        if (user) {
+            res.json({success: false, backData: {}, msg: '用户名已存在！'})
+        } else {
+            user = await new User({username, password, type}).save()
+            res.json({
+                success: true,
+                backData: {username, type, _id: user._id},
+                msg: '注册成功！',
+            })
+        }
+    } catch (e) {
+        console.log(e.stack)
+        res.json({success: false, backData: {}, msg: e.message})
+    }
 }
