@@ -6,7 +6,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { loadData } from '../../redux/user.reducer'
+import { loadData } from '../../redux/user.redux'
 
 @connect(null, {loadData})
 @withRouter

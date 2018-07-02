@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { register } from '../redux/user.reducer'
+import { register } from '../redux/user.redux'
 import Logo from '../components/Logo'
 
 const RadioItem = Radio.RadioItem
