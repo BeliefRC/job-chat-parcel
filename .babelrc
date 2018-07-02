@@ -1,0 +1,26 @@
+{
+  "presets": [
+    "env",
+    "react",
+    "stage-3"
+  ],
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd-mobile",
+        "style": true
+      }
+    ],
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
+    [
+      "transform-decorators-legacy"
+    ]
+  ]
+}
