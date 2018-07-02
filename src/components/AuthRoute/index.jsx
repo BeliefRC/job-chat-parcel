@@ -6,7 +6,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { loadData } from '../../redux/user.redux'
+import { loadData } from '../../redux/user.reducer'
 
 @connect(null, {loadData})
 @withRouter
@@ -24,7 +24,7 @@ export default class AuthRoute extends React.PureComponent {
         //获取当前页面路径
         const {pathname} = this.props.location
         if (!publicPath.includes(pathname)) {
-            const res = await axios.get('http://localhost:9093/user/info')
+            const res = await axios.get('/user/info')
             if (res.status === 200) {
                 //存在信息则保存到redux，不存在则跳转到登录页
                 if (res.data.backData) {

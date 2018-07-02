@@ -3,7 +3,7 @@
 *功能: 页面logo
 */
 import React from 'react'
-import LogoSVG from '../../Chat.svg'
+import LogoSVG from '../../images/Chat.svg'
 import './style.less'
 
 export default class Logo extends React.PureComponent {

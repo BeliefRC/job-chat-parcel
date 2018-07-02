@@ -1,6 +1,6 @@
 import React from 'react'
 import { WingBlank, List, InputItem, Button, WhiteSpace } from 'antd-mobile'
-import Logo from '../components/Logo/Logo'
+import Logo from '../components/Logo'
 
 export default class LoginPage extends React.PureComponent {
     // 构造
@@ -15,7 +15,7 @@ export default class LoginPage extends React.PureComponent {
 
     //设置各项字段到状态中
     handleChange (key, value) {
-        this.setState({key: value})
+        this.setState({[key]: value})
     }
 
     //跳转到注册页面
@@ -24,7 +24,7 @@ export default class LoginPage extends React.PureComponent {
     }
 
     render () {
-        return <div>
+        return <React.Fragment>
             <Logo/>
             <WingBlank>
                 <List>
@@ -54,6 +54,6 @@ export default class LoginPage extends React.PureComponent {
                         onClick={this.goToRegisterPage.bind(
                             this)}>点击立即注册！</Button>
             </WingBlank>
-        </div>
+        </React.Fragment>
     }
 }

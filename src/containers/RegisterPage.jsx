@@ -8,9 +8,10 @@ import {
     Radio,
 } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { register } from '../redux/user.redux'
+import { Redirect } from 'react-router-dom'
 
-import Logo from '../components/Logo/Logo'
+import { register } from '../redux/user.reducer'
+import Logo from '../components/Logo'
 
 const RadioItem = Radio.RadioItem
 @connect(state => state.user, {register})
@@ -22,14 +23,14 @@ export default class RegisterPage extends React.PureComponent {
         this.state = {
             username: '',
             password: '',
-            confirmPassWord: '',
+            repeatPassword: '',
             type: 'genius',
         }
     }
 
     //设置各项字段到状态中
     handleChange (key, value) {
-        this.setState({key: value})
+        this.setState({[key]: value})
     }
 
     // 设置单选框值
@@ -51,11 +52,14 @@ export default class RegisterPage extends React.PureComponent {
             {value: 'boss', label: 'BOSS'},
         ]
         const {type} = this.state
-        const {errorMessage} = this.props
-        return <div>
+        const {errorMessage, redirectTo} = this.props
+        return <React.Fragment>
+            {redirectTo ? <Redirect to={redirectTo}/> : null}
             <Logo/>
             <WingBlank>
-                {errorMessage ? <p className='error-message'>{errorMessage}</p> : null}
+                {errorMessage
+                    ? <p className='error-message'>{errorMessage}</p>
+                    : null}
                 <List>
                     <InputItem
                         type='text'
@@ -81,7 +85,7 @@ export default class RegisterPage extends React.PureComponent {
                         placeholder="请确认密码"
                         clear
                         onChange={(value) => {
-                            this.handleChange('password', value)
+                            this.handleChange('repeatPassword', value)
                         }}
                     >确认密码</InputItem>
                 </List>
@@ -100,6 +104,6 @@ export default class RegisterPage extends React.PureComponent {
                 <Button type="primary"
                         onClick={this.register.bind(this)}>注册</Button>
             </WingBlank>
-        </div>
+        </React.Fragment>
     }
 }

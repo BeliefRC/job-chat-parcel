@@ -4,37 +4,34 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom'
-import reducer from './reducer'
-import './public/axiosConfig'
-import asyncComponent from './public/AsyncComponent'
-import './public/index.less'
-const AuthRoute = asyncComponent(
-    () => import('./components/AuthRoute/AuthRoute'))
-const LoginPage = asyncComponent(() => import('./container/LoginPage'))
-const RegisterPage = asyncComponent(() => import('./container/RegisterPage'))
+import rootReducer from './redux'
+import './configs/axiosConfig'
+import asyncComponent from './components/AsyncComponent'
+import './styles/index.less'
+
+const AuthRoute = asyncComponent(() => import('./components/AuthRoute'))
+const LoginPage = asyncComponent(() => import('./containers/LoginPage'))
+const RegisterPage = asyncComponent(() => import('./containers/RegisterPage'))
 
 const reduxDevTools = window.devToolsExtension
     ? window.devToolsExtension()
     : () => {
     }
 
-
-
-const store = createStore(reducer, compose(
+const store = createStore(rootReducer, compose(
     applyMiddleware(thunk),
     reduxDevTools,
 ))
 
-
 ReactDOM.render(<Provider store={store}>
     <BrowserRouter>
-        <div>
+        <React.Fragment>
             <AuthRoute/>
             <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/register' component={RegisterPage}/>
             </Switch>
-        </div>
+        </React.Fragment>
     </BrowserRouter>
 </Provider>, document.querySelector('#root'))
 

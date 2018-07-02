@@ -12,4 +12,5 @@ exports.info = async (req, res) => {
 //注册
 exports.register = async (req, res) => {
     const {username, password, type} = req.body
+    res.json({success: true, backData: req.body, msg: '注册成功！'})
 }
