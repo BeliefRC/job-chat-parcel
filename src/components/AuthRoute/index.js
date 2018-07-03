@@ -25,13 +25,11 @@ export default class AuthRoute extends React.PureComponent {
         const {pathname} = this.props.location
         if (!publicPath.includes(pathname)) {
             const res = await axios.get('/user/info')
-            if (res.status === 200) {
+            if (res.status === 200 && res.data.success) {
                 //存在信息则保存到redux，不存在则跳转到登录页
-                if (res.data.backData) {
-                    this.props.loadData(res.data.backData)
-                } else {
-                    this.props.history.push('/login')
-                }
+                this.props.loadData(res.data.backData)
+            } else {
+                this.props.history.push('/login')
             }
         }
     }

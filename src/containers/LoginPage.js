@@ -3,9 +3,11 @@ import { WingBlank, List, InputItem, Button, WhiteSpace } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Logo from '../components/Logo'
+import RcForm from '../components/RcForm'
 import { login } from '../redux/user.redux'
 
 @connect(state => state.user, {login})
+@RcForm
 export default class LoginPage extends React.PureComponent {
     // 构造
     constructor (props) {
@@ -17,11 +19,6 @@ export default class LoginPage extends React.PureComponent {
         }
     }
 
-    //设置各项字段到状态中
-    handleChange (key, value) {
-        this.setState({[key]: value})
-    }
-
     //跳转到注册页面
     goToRegisterPage () {
         this.props.history.push('/register')
@@ -29,7 +26,7 @@ export default class LoginPage extends React.PureComponent {
 
     //登录
     login () {
-        this.props.login(this.state)
+        this.props.login(this.props.formData)
     }
 
     render () {
@@ -49,7 +46,7 @@ export default class LoginPage extends React.PureComponent {
                         placeholder="请输入用户名"
                         clear
                         onChange={(value) => {
-                            this.handleChange('username', value)
+                            this.props.handleChange('username', value)
                         }}
                     >用户名</InputItem>
                     <InputItem
@@ -58,7 +55,7 @@ export default class LoginPage extends React.PureComponent {
                         placeholder="请输入密码"
                         clear
                         onChange={(value) => {
-                            this.handleChange('password', value)
+                            this.props.handleChange('password', value)
                         }}
                     >密码</InputItem>
                 </List>

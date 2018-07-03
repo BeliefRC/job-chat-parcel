@@ -8,7 +8,6 @@ import rootReducer from './redux'
 import './configs/axiosConfig'
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.less'
-
 import AuthRoute from './components/AuthRoute'
 import LoginPage from './containers/LoginPage'
 import RegisterPage from './containers/RegisterPage'
@@ -22,12 +21,25 @@ const reduxDevTools = window.devToolsExtension
     : () => {
     }
 
-const store = createStore(rootReducer, compose(
-    applyMiddleware(thunk),
-    reduxDevTools,
-))
+const configureStore = function () {
+    const store = createStore(rootReducer, compose(
+        applyMiddleware(thunk),
+        reduxDevTools,
+    ))
+    if (module.hot) {
+        // Enable Webpack hot module replacement for reducers
+        module.hot.accept(() => {
+            const nextRootReducer = require('./redux').default
+            store.replaceReducer(nextRootReducer, compose(
+                applyMiddleware(thunk),
+                reduxDevTools,
+            ))
+        })
+    }
+    return store
+}
 
-ReactDOM.render(<Provider store={store}>
+ReactDOM.render(<Provider store={configureStore()}>
     <BrowserRouter>
         <React.Fragment>
             <AuthRoute/>

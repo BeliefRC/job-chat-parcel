@@ -9,12 +9,13 @@ import {
 } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-
 import { register } from '../redux/user.redux'
+import RcForm from '../components/RcForm'
 import Logo from '../components/Logo'
 
 const RadioItem = Radio.RadioItem
 @connect(state => state.user, {register})
+@RcForm
 export default class RegisterPage extends React.PureComponent {
     // 构造
     constructor (props) {
@@ -28,11 +29,6 @@ export default class RegisterPage extends React.PureComponent {
         }
     }
 
-    //设置各项字段到状态中
-    handleChange (key, value) {
-        this.setState({[key]: value})
-    }
-
     // 设置单选框值
     onChange (value) {
         this.setState({
@@ -42,7 +38,7 @@ export default class RegisterPage extends React.PureComponent {
 
     //注册按钮事件
     register () {
-        this.props.register(this.state)
+        this.props.register(this.props.formData)
     }
 
     render () {
@@ -67,7 +63,7 @@ export default class RegisterPage extends React.PureComponent {
                         placeholder="请输入用户名"
                         clear
                         onChange={(value) => {
-                            this.handleChange('username', value)
+                            this.props.handleChange('username', value)
                         }}
                     >用户名</InputItem>
                     <InputItem
@@ -76,7 +72,7 @@ export default class RegisterPage extends React.PureComponent {
                         placeholder="请输入密码"
                         clear
                         onChange={(value) => {
-                            this.handleChange('password', value)
+                            this.props.handleChange('password', value)
                         }}
                     >密码</InputItem>
                     <InputItem
@@ -85,7 +81,7 @@ export default class RegisterPage extends React.PureComponent {
                         placeholder="请确认密码"
                         clear
                         onChange={(value) => {
-                            this.handleChange('repeatPassword', value)
+                            this.props.handleChange('repeatPassword', value)
                         }}
                     >确认密码</InputItem>
                 </List>

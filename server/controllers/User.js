@@ -9,6 +9,24 @@ exports.list = async (req, res) => {
 
 //验证用户信息
 exports.info = async (req, res) => {
+    try {
+        const {userId} = req.cookies
+        console.log(userId)
+        if (userId) {
+            const user = await User.findOne({_id: userId}, _filter)
+            if (user) {
+                res.json({success: true, backData: user, msg: '验证通过'})
+            } else {
+                res.json({success: false, backData: {}, msg: '信息认证失败，请重新登录！'})
+            }
+        } else {
+            res.json({success: false, backData: {}, msg: '请登录！'})
+        }
+
+    } catch (e) {
+        console.log(e.stack)
+        res.json({success: false, backData: {}, msg: e.message})
+    }
     res.json(
         {success: true, backData: {username: '', type: ''}, msg: '查询用户身份成功'})
 }
