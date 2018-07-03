@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const bcrypt = require('bcrypt-nodejs');
-const SALT_WORK_FACTOR = 10;
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -37,12 +37,12 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', function (next) {
     let user = this
-    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
         if (err) {
             return next(err)
         } else {
             //密码加盐
-            bcrypt.hash(user.password, salt, null, (err, hash) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
                 if (err) {
                     return next(err)
                 } else {
@@ -53,5 +53,16 @@ UserSchema.pre('save', function (next) {
         }
     })
 })
+
+//匹配密码
+UserSchema.methods.comparePassword = async function (_password, cb) {
+    try {
+        const match = await bcrypt.compare(_password, this.password)
+        cb(null, match)
+    } catch (e) {
+        console.log(e)
+        return cb(e)
+    }
+}
 
 module.exports = UserSchema

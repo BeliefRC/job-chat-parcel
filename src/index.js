@@ -9,9 +9,13 @@ import './configs/axiosConfig'
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.less'
 
-const AuthRoute = asyncComponent(() => import('./components/AuthRoute'))
+import AuthRoute from './components/AuthRoute'
+import LoginPage from './containers/LoginPage'
+import RegisterPage from './containers/RegisterPage'
+
+/*const AuthRoute = asyncComponent(() => import('./components/AuthRoute'))
 const LoginPage = asyncComponent(() => import('./containers/LoginPage'))
-const RegisterPage = asyncComponent(() => import('./containers/RegisterPage'))
+const RegisterPage = asyncComponent(() => import('./containers/RegisterPage'))*/
 
 const reduxDevTools = window.devToolsExtension
     ? window.devToolsExtension()

@@ -1,7 +1,11 @@
 import React from 'react'
 import { WingBlank, List, InputItem, Button, WhiteSpace } from 'antd-mobile'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Logo from '../components/Logo'
+import { login } from '../redux/user.redux'
 
+@connect(state => state.user, {login})
 export default class LoginPage extends React.PureComponent {
     // 构造
     constructor (props) {
@@ -23,10 +27,21 @@ export default class LoginPage extends React.PureComponent {
         this.props.history.push('/register')
     }
 
+    //登录
+    login () {
+        this.props.login(this.state)
+    }
+
     render () {
+        const {errorMessage, redirectTo} = this.props
+
         return <React.Fragment>
+            {redirectTo ? <Redirect to={redirectTo}/> : null}
             <Logo/>
             <WingBlank>
+                {errorMessage
+                    ? <p className='error-message'>{errorMessage}</p>
+                    : null}
                 <List>
                     <InputItem
                         type='text'
@@ -48,7 +63,7 @@ export default class LoginPage extends React.PureComponent {
                     >密码</InputItem>
                 </List>
                 <WhiteSpace/>
-                <Button type="ghost">登录</Button>
+                <Button type="ghost" onClick={this.login.bind(this)}>登录</Button>
                 <WhiteSpace/>
                 <Button type="primary"
                         onClick={this.goToRegisterPage.bind(

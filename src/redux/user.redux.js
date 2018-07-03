@@ -49,6 +49,23 @@ export function loadData (userInfo) {
     return {type: LOAD_DATA, payload: userInfo}
 }
 
+//登录
+export function login ({username, password}) {
+    return async dispatch => {
+        //表单验证
+        if (!username || !password) {
+            return dispatch(makeErrorMessage('用户名密码必须输入！'))
+        }
+        const res = await axios.post('/user/login', {username, password})
+        if (res.status === 200 && res.data.success) {
+            dispatch(success(res.data.backData))
+            Toast.success('登录成功!', 3, f => f, false)
+        } else {
+            dispatch(makeErrorMessage(res.data.msg))
+        }
+    }
+}
+
 //注册
 export function register ({username, password, repeatPassword, type}) {
     return async dispatch => {
