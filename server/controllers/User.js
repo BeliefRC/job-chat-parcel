@@ -11,7 +11,6 @@ exports.list = async (req, res) => {
 exports.info = async (req, res) => {
     try {
         const {userId} = req.cookies
-        console.log(userId)
         if (userId) {
             const user = await User.findOne({_id: userId}, _filter)
             if (user) {

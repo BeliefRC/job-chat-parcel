@@ -89,3 +89,10 @@ export function register ({username, password, repeatPassword, type}) {
     }
 }
 
+export function completeUserInfo ({avatar, position, company, salary, description}) {
+    return async dispatch=>{
+        console.log(avatar, position, company, salary, description);
+        return dispatch(makeErrorMessage('用户名密码必须输入！'))
+    }
+}
+

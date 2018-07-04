@@ -11,6 +11,8 @@ import './styles/index.less'
 import AuthRoute from './components/AuthRoute'
 import LoginPage from './containers/LoginPage'
 import RegisterPage from './containers/RegisterPage'
+import BossInfo from './containers/BossInfo'
+import GeniusInfo from './containers/GeniusInfo'
 
 /*const AuthRoute = asyncComponent(() => import('./components/AuthRoute'))
 const LoginPage = asyncComponent(() => import('./containers/LoginPage'))
@@ -46,6 +48,8 @@ ReactDOM.render(<Provider store={configureStore()}>
             <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/register' component={RegisterPage}/>
+                <Route path='/BossInfo' component={BossInfo}/>
+                <Route path='/GeniusInfo' component={GeniusInfo}/>
             </Switch>
         </React.Fragment>
     </BrowserRouter>
